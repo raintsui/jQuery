@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<div>1</div>
+<script type="text/javascript">
+var request = null;
+if(window.XMLHttpRquest){
+	request = new XMLHttpRquest();
+}else if(window.activeXObject){
+	request = new activeXObject("Microsoft.XMLHttp");
+}
+request.open("GET","",true);
+request.send();
+request.onreadystatechange = function(){
+	if(request.readyState===4){
+		if(request.status===200){
+			var data = JSON.parse(request.responseText);
+			if(data.success){document.getElementById("searchResult").innerHTML = request.responseText;}else{
+				
+			}
+			
+		}else{
+			alert("发生错误："+request.status);
+		}
+	}
+};
+
+
+
+
+
+
+</script>
+</body>
+</html>

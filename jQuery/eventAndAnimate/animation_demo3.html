@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>其他动画方法（toggle,slideToggle,fadeTo,fadeToggle）</title>
+	<style type="text/css">
+		div{height: 200px;width: 200px;margin:20px;background-color: #ccc;}
+		.hide{display: none;}
+	</style>
+</head>
+<body>
+	<div class="one">toggle</div><span class="hide">dddddddddd</span>
+	<div class="two">slideToggle</div><span class="hide">dddddddddd</span>
+	<div class="three">fadeTo</div><span class="hide">dddddddddd</span>
+	<div class="four">fadeToggle</div><span class="hide">dddddddddd</span>
+	<script type="text/javascript" src="../js/jquery-3.3.1.js"></script>
+	<script type="text/javascript">
+	$(function(){
+		$(".one").click(function(){
+			$(this).next().toggle();
+		});
+		$(".two").click(function(){
+			$(this).next().slideToggle();
+		});
+		$(".three").click(function(){
+			$(this).next().fadeTo("normal",0.3);
+		});
+		$(".four").click(function(){
+			$(this).next().fadeToggle();
+		});
+
+
+	});
+	
+	</script>
+</body>
+</html>

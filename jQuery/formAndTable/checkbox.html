@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>复选框应用</title>
+	<style type="text/css">
+		*{margin: 0;padding: 0;}
+		#box{margin:30px auto;width: 400px;height: auto;border:1px solid #ccc;}
+		#checkbox1,#checkbox2{margin: 20px;border-bottom: 1px solid #ccc;border-top: 1px solid #ccc;padding: 10px;}
+	</style>
+</head>
+<body>
+<div id="box">
+	<div id="checkbox1">
+         <form>
+         	你爱好的运动是？<br/>
+         	<input type="checkbox" id="item1" name="items" value="足球" /><label for="item1">足球</label>
+         	<input type="checkbox" id="item2" name="items" value="篮球" /><label for="item2">篮球</label>
+         	<input type="checkbox" id="item3" name="items" value="羽毛球" /><label for="item3">羽毛球</label>
+         	<input type="checkbox" id="item4" name="items" value="乒乓球" /><label for="item4">乒乓球</label><br/>
+         	<input type="button" id="checkedAll01" value="全 选">
+         	<input type="button" id="checkedNo" value="全不选">
+         	<input type="button" id="checkedRev" value="反 选">
+         	<input type="button" id="send" value="提交">
+         </form>
+	</div>
+	<div id="checkbox2">
+         <form>
+         	你爱好的运动是？
+         	<input type="checkbox" id="checkedAll02"/><label for="checkedAll02">全选/全不选</label><br/>
+         	<input type="checkbox" id="tip1" name="tips" value="足球" /><label for="tip1">足球</label>
+         	<input type="checkbox" id="tip2" name="tips" value="篮球" /><label for="tip2">篮球</label>
+         	<input type="checkbox" id="tip3" name="tips" value="羽毛球" /><label for="tip3">羽毛球</label>
+         	<input type="checkbox" id="tip4" name="tips" value="乒乓球" /><label for="tip4">乒乓球</label>
+         </form>
+	</div>	
+</div>
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+<script type="text/javascript" src="../js/jquery-3.3.1.js"></script>
+<script type="text/javascript">
+	$(function(){
+		//点击全选时，所有name属性为items并且是checkbox（复选框）的框全部选中
+		/*$("#checkedAll01").click(function(){
+			$("[name=items]:checkbox").attr("checked",true);
+		});
+		很多时候可以用attr属性来获取和修改属性值，但是在某些时候，例如input中的disable，有些浏览器可以只写属性名即可，有些则要求它值也要写，所以从1.6版本的jQuery开始，提供新的方法prop()来获取这些属性，返回值是标准属性：true/false.
+		适用情况：
+		（原则1）只添加属性名称该属性就会生效应该使用prop();
+		（原则2）只存在true/false的属性应该使用prop()
+
+		按照官方说明，如是设置disable和checked这些属性，应该使用prop()，所以下面均换成prop()
+		*/
+		$("#checkedAll01").click(function(){
+			$("[name=items]:checkbox").prop("checked",true);
+		});
+		//点击全不选时
+		$("#checkedNo").click(function(){
+			$("[name=items]:checkbox").prop("checked",false);
+		});
+		//点击反选时
+		$("#checkedRev").click(function(){
+			$("[name=items]:checkbox").each(function(){
+
+			/*  $(this).prop("checked","!$(this).prp(checked)");
+				【此处jQuery方法有些复杂，可以用JS方法】  */
+
+				this.checked=!this.checked;
+			});
+		});
+		//点击提交时
+		$("#send").click(function(){
+			var str = "你选中的是：\r\n";
+			$("[name=items]:checkbox:checked").each(function(){
+				str += $(this).val()+"\r\n";
+			});
+			alert(str);
+		});
+
+	});
+	//第二个复选框
+	$(function(){
+		//如果点击全选/全不选复选框当前选中了，则全选，否则全不选
+		/*$("#checkedAll02").click(function(){
+			//$("#checkedAll02:checked"))选中的是处于这种状态的元素，而不是判断的布尔值，所以直接在if中写会有问题
+			//$(this).prop("checked")稍微复杂一些，改用JS方法
+			if(this.checked){
+				$("[name=tips]:checkbox").prop("checked",true);
+			}else{
+				$("[name=tips]:checkbox").prop("checked",false);
+			}
+		});
+		上面代码和页面操作可以看出，选项和控制选框是值相同变化的，因此可以将选项的值与控制的值挂钩
+		*/
+	    $("#checkedAll02").click(function(){
+	    	$("[name=tips]:checkbox").prop("checked",this.checked);
+	    });
+
+		//还要判断当列表中复选框全部选中或全部不选中后，全选/全不选复选框的变化
+		//通过比较所有值是否都true/false来判断
+		$("[name=tips]:checkbox").click(function(){
+			var flag = true;
+			var $tmp = $("[name=tips]:checkbox");
+			$tmp.each(function(){
+				if(!this.checked){
+					flag = false;
+				}
+			});
+			$("#checkedAll02").prop("checked",flag);
+		});
+		/*还有以下思路：根据选项选中成功的长度*/
+	/*
+	$("[name=tips]:checkbox").click(function(){
+			var $tmp = $("[name=tips]:checkbox");
+			$("#checkedAll02").prop("checked",$tmp.length==$tmp.filter(":checked").length);
+	});*/
+	});
+	
+</script>
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>下拉框应用（内容转移）</title>
+	<style type="text/css">
+		*{margin: 0;padding: 0;}
+		#selectWrap{width: 600px;height: auto;margin: 100px auto;border:1px solid #ccc;}
+		.left{float: left;}
+		.right{float: right;}
+		.clear{clear: both;}
+		input:focus{background-color: #ccc;}
+		#add,#add_all,#remove,#remove_all{display: block;background-color: #ccc;border-radius: 5px;width: 35px;text-align: center;}
+		
+		.btns{margin:30px 5px;width:auto;}
+		#selectWrap>div{margin: 10px;}
+		
+
+	</style>
+</head>
+<body>
+<div id="selectWrap">
+	<div><label for="acount">登录账号：</label><input id="acount" name="form" type="text" value="y02" /></div>
+	<div><label for="password">登录密码：</label><input id="password" name="form" type="password" value="ssdfffff" /></div>
+	<div><label for="holder">主持人名：</label><input id="holder" name="form" type="text" value="小倩" /></div>
+    <div >
+    	<span class="left">负责频道：</span>
+        <div class="left"><select id="select1" style="height: 160px;width: 100px;" multiple="multiple">
+	    	<option value="1">美丽人生</option>
+	    	<option value="2">心花怒放</option>
+	    	<option value="3">心绪留香</option>
+	    	<option value="4">夜韵飞扬</option>
+	    	<option value="5">皆大欢喜</option>
+	    	<option value="6">人生如梦</option>
+	    	<option value="7">譬如朝鹭</option>
+	    	<option value="8">去日苦多</option>
+	    	<option value="9">悲从中来</option>
+	    	<option value="10">爱拼才会赢</option>
+	    	<option value="11">忧喜参半</option>
+	    	<option value="12">女王的教师</option>
+	    	<option value="13">圈套</option>
+	    	<option value="14">吐露真言</option>
+	    	<option value="15">才高八斗</option>
+	    </select></div>
+	    <div class="left btns">
+	    	<button id="add">>|</button>
+	    	<button id="add_all">>></button>
+	    	<button id="remove">|<</button>
+	    	<button id="remove_all"><<</button>
+	    </div>
+	    <div class="left"><select id="select2" height="100px" multiple="multiple" style="height: 160px;width: 100px;"></select></div>
+	    <div class="clear">
+    </div>
+</div>
+</div>
+<script type="text/javascript" src="../js/jquery-3.3.1.js"></script>
+<script type="text/javascript">
+	$(function(){
+		//将选中的选项转移到右边
+		$("#add").click(function(){
+			var $options = $("#select1 option:selected");
+			/*var $remove = $options.remove();
+			$remove.appendTo("#select2").prop("selected",false);*/
+			//由于appendTo()可表示删除和添加功能以上可以两行代码只有下面一行完成
+			$options.appendTo("#select2").prop("selected",false);
+		});
+		//将左边选项全部转移到右边
+		$("#add_all").click(function(){
+			$("#select1 option").appendTo("#select2").prop("selected",false);
+		});
+		//双击某个选项将它转移到右边
+		/*将双击事件绑定在选项上行不通
+		表现：左边可以双击转移，但是右边双击不会转移到左边，而是还在后边排在队尾
+		原因：左边原来代码中存在选项，可以绑定事件，但是右边没有选项代码，无法绑定DOM事件。*/
+		/*$("#select1 option").dblclick(function() {
+			$(this).appendTo("#select2").prop("selected",false);
+		});
+		$("#select2 option").dblclick(function() {
+			$(this).remove().appendTo("#select1").prop("selected",false);
+		});*/
+		
+	  //可以给选框绑定双击事件，辨别作用域中哪个处于selected时将它转移过去
+	  //$("option:selected",this),第一个参数是选择器，第二个参数是作用域。
+	  $("#select1").dblclick(function(){
+	  	$("option:selected",this).appendTo("#select2").prop("selected",false);
+	  });
+	  //双击将右边选项转移到左边
+	  $("#select2").dblclick(function(){
+	  	$("option:selected",this).appendTo("#select1").prop("selected",false);
+	  });
+	  //将选中的选项转移到左边
+		$("#remove").click(function(){
+			var $options = $("#select2 option:selected");
+			/*var $remove = $options.remove();
+			$remove.appendTo("#select2").prop("selected",false);*/
+			//由于appendTo()可表示删除和添加功能以上可以两行代码只有下面一行完成
+			$options.appendTo("#select1").prop("selected",false);
+		});
+		//将左边选项全部转移到左边
+		$("#remove_all").click(function(){
+			$("#select2 option").appendTo("#select1").prop("selected",false);
+		});
+
+	});
+</script>
+</body>
+</html>

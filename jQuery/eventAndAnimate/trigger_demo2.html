@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>trigger触发自定义事件</title>
+</head>
+<body>
+	<button id="btn">点击我</button>
+	<div id="txt"></div>
+	
+	<script type="text/javascript" src="../js/jquery-3.3.1.js"></script>
+	<script type="text/javascript">
+	$(function(){
+			$("#btn").bind("myclick",myFun1=function(){
+				$("#txt").append("<p>第一个函数</p>");
+		});
+//trigger()方法不仅能触发浏览器支持的具有相同名称的事件，也可以触发自定义事件。
+$("#btn").trigger("myclick");//也可以简写，$("#btn").click();
+
+		});	
+	</script>
+</body>
+</html>

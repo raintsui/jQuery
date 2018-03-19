@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>trigger触发自定义事件</title>
+</head>
+<body>
+	<button id="btn">点击我</button>
+	<div id="txt"></div>
+	
+	<script type="text/javascript" src="../js/jquery-3.3.1.js"></script>
+	<script type="text/javascript">
+	$(function(){
+			$("#btn").bind("click",myFun1=function(event,msg1,msg2){
+				$("#txt").append("<p>"+msg1+" "+msg2+"</p>");
+		});
+//trigger([type],[data])第一个参数是要触发的事件类型，第二个参数是要传递给事件处理函数的附加数据，以数组形式传递。
+$("#btn").trigger("click",["我的自定义事件","这是传递进去的参数显示的文字"]);//也可以简写，$("#btn").click();
+
+		});	
+	</script>
+</body>
+</html>

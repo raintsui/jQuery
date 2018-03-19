@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>停止动画</title>
+	<style type="text/css">
+		.one{width: 60px;height: 40px;background-color: #ccc;}
+		.two{width: 60px;height: 40px;background-color: #343434;}
+		.three{width: 60px;height: 40px;background-color: #3dedee;}
+		.four{width: 60px;height: 40px;background-color: #44444e;}
+	</style>
+</head>
+<body>
+	<div class="one"></div>
+	<div class="one"></div>
+	<div class="one"></div>
+	<div class="one"></div>
+	<div class="one"></div>
+<!--可以看见移出后，宽度变化停止然后高度继续增长（还是在移入事件中，该进行的动画停止，但依旧执行后面排队的动画。），最后（移出事件）宽度和高度改变回去-->
+    <div class="two"></div>
+	<div class="two"></div>
+	<div class="two"></div>
+	<div class="two"></div>
+	<div class="two"></div>
+<!--clearQueue设置为true后，进行的动画立即停止开始执行移出事件的动画。-->
+	<div class="three"></div>
+	<div class="three"></div>
+	<div class="three"></div>
+	<div class="three"></div>
+	<div class="three"></div>
+
+	<div class="four"></div>
+	
+
+
+
+
+
+
+
+
+
+	<script type="text/javascript" src="../js/jquery-3.3.1.js"></script>
+	<script type="text/javascript">
+		$(function(){
+		//直接使用stop()，立即停止当前的正在进行的动画，如果后续有动画等待执行，则以当前状态开始接下来的动画
+			$(".one").hover(function(){
+				$(this).stop()
+				       .animate({height:"60px",width:"160px"},200);
+			},function(){
+				$(this).stop()
+				       .animate({height:"40px",width:"60px"},300);
+			});
+
+			//组合动画时
+			$(".two").hover(function(){
+				$(this).stop()
+				       .animate({width:"160px"},2000)//如果在此时触发光标移出事件，将执行下面的动画，而非光标移出事件中的动画。
+				       .animate({height:"100px"},3000);
+			},function(){
+				$(this).stop()
+				       .animate({height:"40px"},2000)
+				       .animate({width:"60px"},3000);
+			});
+			//将stop(true)中clearQueue设置为true，则会把元素当前未执行的动画队列清空。
+			$(".three").hover(function(){
+				$(this).stop(true)
+				       .animate({width:"160px"},2000)//如果在此时触发光标移出事件，将执行下面的动画，而非光标移出事件中的动画。
+				       .animate({height:"100px"},3000);
+			},function(){
+				$(this).stop(true)
+				       .animate({height:"40px"},2000)
+				       .animate({width:"60px"},3000);
+		    });
+		    //通常后一个动画是基于前一个动画时就会将第二个参数gotoEnd设置为true
+		    //stop(false,true)
+		    $(".four").hover(function(){
+		    	$(this).stop(true,false);
+		    	$(this).animate({height:"80px"})
+		              .animate({width:"100px"})
+		              .animate({opacity:"0.4"});
+		    },function(){
+		    	$(this).stop(true,false);
+		    	$(this).animate({height:"30px"})
+		              .animate({width:"50px"})
+		              .animate({opacity:"0.8"}).delay(2000)//延迟动画，判断动画是：$(this).is(":animated")
+		              .fadeOut("slow");
+		    });
+
+		});
+	</script>
+</body>
+</html>

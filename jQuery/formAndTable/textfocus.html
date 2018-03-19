@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>文本框获取焦点变化</title>
+	<style type="text/css">
+	form{margin: 0 auto;width: 400px;height: auto;}
+		.focus{
+			background-color: #fcc;
+			border:1px solid #f00;
+		}/*IE6中不支持hover伪类在除a标签之外的运用。*/
+	</style>
+</head>
+<body>
+	<form action="#" method="">
+		<fieldset>
+			<legend>个人基本信息</legend>
+			<label for="username">用户名</label>
+			<input type="text" id="username" name="form1"><br/>
+			<label for="password">密码：</label>
+			<input type="password" id="password" name="form1"><br/>
+			<label for="msg">详细信息：</label><br/>
+		    <textarea id="msg" >例如家庭地址、爱好、经历等</textarea>
+		</fieldset>
+	</form>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+	<script type="text/javascript">
+		$(function(){;
+			$(":input").focus(function(){
+				$(this).addClass("focus");
+			}).blur(function(){
+				$(this).removeClass("focus");
+			});
+		});
+	</script>
+</body>
+</html>

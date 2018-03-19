@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>表格普通各行变色</title>
+	<style type="text/css">
+		*{margin:0;padding: 0;}
+		table{ width:300px;border:1px solid #ccc;margin:100px auto;  border-collapse:collapse;}
+		tr td{width: 100px;height: 2em;padding-left: 0.5em;}
+		table thead{border-bottom:1px solid #ccc;}
+		.high{background-color: #499;}
+	</style>
+</head>
+<body>
+	<table>
+		<thead>
+			<tr><td colspan="3">筛选：<input type="text" id="filterName" /></td></tr>
+			<tr><th>姓名</th><th>性别</th><th>暂住地</th></tr>
+		</thead>
+
+		<tbody>
+			<tr><td>张三</td><td>男</td><td>浙江宁波</td></tr>
+			<tr><td>李四</td><td>男</td><td>广东深圳</td></tr>
+			<tr><td>王五</td><td>女</td><td>湖南湘江</td></tr>
+			<tr><td>赵六</td><td>男</td><td>江西赣州</td></tr>
+			<tr><td>李麻子</td><td>男</td><td>北京</td></tr>
+			<tr><td>何柳</td><td>女</td><td>四川成都</td></tr>
+		</tbody>
+		<tfoot></tfoot>
+	</table>
+	<script type="text/javascript" src="../js/jquery-3.3.1.js"></script>
+	<script type="text/javascript">
+		/*这个内容选择器可以将姓王的单元行给高亮出来
+		$("table tbody tr:contains('王')").addClass('high');
+		结合filter()可以实现表格内容的过滤。*/
+		/*
+		这里会隐藏表格内容，显示包含“李”的内容的行。
+		 $(function(){
+			$("table tbody>tr").hide().filter(":contains('李')").show();
+		});*/
+		//将过滤内容换成变量，这里变量前后的“+”的作用是连接符
+		$(function(){
+			$("#filterName").keyup(function(){
+				$("table tbody tr").hide().filter(":contains('"+( $(this).val() )+"')").show();
+			}).keyup();/*有一点需注意，浏览器中会刷新表格内容而保存表单中的内容，
+			因此这里需要绑定事件后立即执行keyup事件，以便页面刷新时保持刷新前的样子。*/
+			//但在chrome中刷新后表格和表单元素都会刷新了
+		});
+		
+	</script>
+	
+</body>
+</html>

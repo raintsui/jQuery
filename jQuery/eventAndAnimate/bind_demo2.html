@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>事件绑定之加强效果（bind）</title>
+	<style type="text/css">
+		*{margin: 0;padding: 0;}
+		#panel{width: 400px;margin: 100px auto;border:1px solid #898989;}
+		.head{background-color: #ddffdd;cursor: pointer;padding: 10px 5px;border-bottom:1px solid #898989;}
+		.head:hover{background-color:#ddffaa;}
+		.content{display: none;text-indent: 2em;padding: 10px; }
+	</style>
+</head>
+<body>
+	<div id="panel">
+		<h5 class="head">什么是jQuery？</h5>
+		<div class="content">
+			<p>Query就是javascript的一个库，把我们常用的一些功能进行了封装，方便我们来调用，提高我们的开发效率。极大地简化了 JavaScript 编程。</p>
+			<p>Javascipt跟jQuery的区别：</p>
+			<p>Javascript是一门编程语言，我们用它来编写客户端浏览器脚本。jQuery是javascript的一个库，包含多个可重用的函数，用来辅助我们简化javascript开发。 jQuery能做的javascipt都能做到，而javascript能做的事情，jQuery不一定能做到。</p>
+		</div>
+	</div>
+<script type="text/javascript" src="../js/jquery-3.3.1.js"></script>
+<script type="text/javascript">
+	//判断是否可见来决定隐藏/显示，利用可见性选择器:visible(另一个:hidden)
+	$(document).ready(function(){
+		$("h5.head").bind("click",function(){
+			var $content = $(this).next();
+			if($content.is(":visible")){
+				$content.hide();
+			}else{
+				$content.show();
+			}
+		});
+	});
+</script>
+</body>
+</html>

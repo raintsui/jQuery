@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>表格普通各行变色</title>
+	<style type="text/css">
+		*{margin:0;padding: 0;}
+		table{border:1px solid #ccc;margin:100px auto;}
+		tr td{width: 100px;height: 2em;padding-left: 0.5em;cursor: pointer;}
+		.high{background-color: #499 !important;}
+		.even{background-color:#fff38f;}
+		.odd{background-color:#ffffee;}
+		th{background-color:powderblue;}
+	</style>
+</head>
+<body>
+	<table>
+		<thead>
+			<tr><th>序号</th><th>姓名</th><th>性别</th><th>暂住地</th></tr>
+		</thead>
+
+		<tbody>
+			<tr><td>1.<input type="checkbox" name="tb2" /></td><td>张三</td><td>男</td><td>浙江宁波</td></tr>
+			<tr><td>2.<input type="checkbox" name="tb2" /></td><td>李四</td><td>男</td><td>广东深圳</td></tr>
+			<tr><td>3.<input type="checkbox" name="tb2" checked="" /></td><td>王五</td><td>女</td><td>湖南湘江</td></tr>
+			<tr><td>4.<input type="checkbox" name="tb2" /></td><td>赵六</td><td>男</td><td>江西赣州</td></tr>
+			<tr><td>5.<input type="checkbox" name="tb2" /></td><td>李麻子</td><td>男</td><td>北京</td></tr>
+			<tr><td>6.<input type="checkbox" name="tb2" /></td><td>何柳</td><td>女</td><td>四川成都</td></tr>
+		</tbody>
+		<tfoot></tfoot>
+	</table>
+	<script type="text/javascript" src="../js/jquery-3.3.1.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$("tbody>tr:even").addClass('even');
+			$("tbody>tr:odd").addClass('odd');
+/*
+//复选框可以多选，单击某行时，判断是否已有high类。来判定是否高亮。
+        $("tbody tr").click(function(){
+        	if($(this).hasClass("high")){
+        		$(this).removeClass("high")
+        		.find(":checkbox").prop("checked",false);//这里用attr方法也能实现效果，但是最好还是用prop
+        	}else{
+        		$(this).addClass("high")
+        		.find(":checkbox").prop("checked",true);
+        	}
+        });*/
+//上面代码可以简化如下代码：(tips:三元运算符和相关变量)
+        $("tbody tr").click(function(){
+        	var hasHigh = $(this).hasClass("high");
+        	$(this)[hasHigh?"removeClass":"addClass"]("high")
+        	.find(":checkbox").prop("checked",!hasHigh);//属性用[]时属性名记得添加双引号。
+        });
+//原先选中的也要高亮
+        $("tr :input:checked").parents("tr").addClass("high");
+        //或者$("tbody tr:has(:checked)").addClass("high");
+
+
+		});
+	</script>
+
+	
+</body>
+</html>
+

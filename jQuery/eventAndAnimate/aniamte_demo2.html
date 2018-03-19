@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>综合动画</title>
+</head>
+<body>
+	<div style="height: 100px;width:300px;background-color: #222;"></div>
+	<script type="text/javascript" src="../js/jquery-3.3.1.js"></script>
+	<script type="text/javascript">
+		$("div").animate({left:"200px",height:"200px",opacity:"0.6"},3000)
+		.animate({top:"20px",width:"200px"},1000,function(){
+			$(this).css("border","5px solid blue");
+		});
+	</script>
+</body>
+</html>

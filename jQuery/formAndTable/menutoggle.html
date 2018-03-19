@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>网页选项卡</title>
+	<style type="text/css">
+	*{margin:0;padding: 0;}
+	body { font:14px/19px Arial, Helvetica, sans-serif; color:#666;}
+	.menutab{width: 300px;padding: 15px;margin:80px auto;border:1px solid #ccc;}
+	.tab-menu ul{margin:0;padding: 0;list-style: none;}
+	.tab-menu li{display: inline-block;margin-right: 5px;background:#F1F1F1;border:1px solid #898989;border-bottom:none;cursor: pointer;padding: 4px;}
+	.tab-box{border:1px solid #898989;width: 300px;}
+	.tab-box>div{height: 150px;}
+    .hide{display: none;}
+     .tab-menu li.hover{background: #DFDFDF;}
+   .tab-menu li.selected{background: #6D84B4;color: #fff;}
+   
+
+	</style>
+</head>
+<body>
+	<div class="menutab">
+		<div class="tab-menu"><ul>
+			<li class="selected">时事</li>
+			<li>体育</li>
+			<li>娱乐</li>
+			<li>科技</li>
+		</ul></div>
+		<div class="tab-box">
+			<div>时事时事时事时事</div>
+			<div class="hide">体育体育体育</div>
+			<div class="hide">娱乐娱乐娱乐娱乐</div>
+			<div class="hide">科技科技</div>
+		</div>
+	</div>
+	<script type="text/javascript" src="../js/jquery-3.3.1.js"></script>
+	<script type="text/javascript">
+		$(function(){
+
+			$("div.tab-menu>ul>li").click(function(){
+				$(this).addClass("selected")
+				       .siblings().removeClass("selected");
+
+				var num = $("div.tab-menu>ul>li").index(this);//取得该li在所有li中的位置来找到与之对应的div内容
+				$(".tab-box>div").eq(num).show()
+				                 .siblings().hide();
+			}).hover(function(){
+				$(this).addClass("hover");
+			},function(){
+				$(this).removeClass("hover");
+			});
+		});
+	</script>
+</body>
+</html>

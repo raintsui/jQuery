@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>json基本语法</title>
+</head>
+<body>
+	<div>
+		<p>1.简单值</p>
+		<p>2.数组</p>
+		<p>3.对象</p>
+		<p>注意：对象和数组通常是json数据结构的最外层形式（当然不是强制规定—），利用他们可以创造各种各样的数据结构。</p>
+	</div>
+<script type="text/javascript">
+	//以数组形式包含的json数据
+var books = [
+	{"title":"Professional javascript",
+	 "authors":"Nocholas C.Zakes",
+	 "edition":3,
+	"year":2011
+	},
+	{"title":"Miss You",
+	 "authors":"Zakes",
+	 "edition":2,
+	"year":2013},
+	{"title":"Someone Like You",
+	 "authors":"Adia",
+	 "edition":3,
+	"year":2001},
+	{"title":"Nope!",
+	 "authors":"Nocholas",
+	 "edition":4,
+	"year":2011},
+	{"title":"Professional",
+	 "authors":"Mili",
+	 "edition":5,
+	"year":2011},
+	{"title":"Sorry About That",
+	 "authors":"Nocholas C.Zakes",
+	 "edition":1,
+	"year":2001},
+	{"title":"Professional javascript",
+	 "authors":"Nocholas C.Zakes",
+	 "edition":3,
+	"year":2012},
+	{"title":"Professional javascript",
+	 "authors":"Nocholas C.Zakes",
+	 "edition":3,
+	"year":2015},
+];
+alert(books[2].title);
+
+//【相互转换】
+
+//stringify()方法将JS对象转化为JSON对象
+var book2={"title":"Sorry About That",
+	 "authors":["Nocholas C.Zakes","Hely"],
+	 "edition":1,
+	"year":2001};
+ var jsonText = JSON.stringify(book2);
+ alert("jsonText："+jsonText);//返回的就是整个去掉空格和换行后的数据
+ //JSON.parse()方法将JSON对象转化成JS对象，若传递的不是有效的JSON字符串，则会抛出错误
+ var book2copy = JSON.parse(jsonText);
+ alert("book2copy："+book2copy);//{object,object}
+ alert("jsonText和book2copy相等："+book2copy===jsonText);
+ /*stringify()转换成JS原生对象后，所以的函数和原型成员都会被忽略，不体现在结果中，而且值为undefined的也会被跳过，
+ 结果中都是为有效的"JSON"数据类型的实例属性
+
+ 虽然book2和book2copy都是具有相同属性，但是他们是两个独立的、没有任何关系的对象。一个是数据格式，一个是对象*/
+
+
+//【序列化选项】
+var book = {
+		"title":"Professional javascript",
+		"authors":["Nocholas C.Zakes","Hely"],
+		edition:3,
+		year:2009
+};
+//1.过滤结果
+//参数一：过滤器（可以是数组、函数）
+//数组
+var jsonText2 = JSON.stringify(book,["title","authors"]);//返回与数组中对应的两个属性
+var jsonText3 = JSON.stringify(book,["title","edition"]);
+alert("第一个："+jsonText2+"第二个："+jsonText3);//第一个：{"title":"Professional javascript","authors":["Nocholas C.Zakes","Hely"]}第二个：{"title":"Professional javascript","edition":3}
+
+//函数（两个参数，属性名和属性值（即键值对））
+var jsonText4 = JSON.stringify(book,function(key,value){
+	switch(key){
+		case "authors":
+		return value.join(',');
+		case "year":
+		return 6000;
+		case "edition":
+		return undefined;
+		default:
+		return value;
+	}
+});
+alert(jsonText4);//{"title":"Professional javascript","authors":"Nocholas C.Zakes,Hely","year":6000}
+//这里根据传入的键来决定结果，返回undefined会删除对应的属性。
+
+
+//2.字符串缩进
+//JSON.stringify()方法的第三个参数控制结果中的缩进和空白符
+//例如要在每个级别缩进4个空格，但是不能超过10，超过则被改变为10
+var jsonText5 =JSON.stringify(book,null,4);
+alert("每级缩进4个空格："+jsonText5);
+//如果缩进为字符串
+var jsonText6 = JSON.stringify(book,null,"----");
+alert("如果缩进为字符串"+jsonText6);
+/*
+效果看警告框
+ */
+
+//toJSON()方法，返回其自身的JSON格式，是写在原来JS原生对象中
+ book = {
+		"title":"Professional javascript",
+		"authors":["Nocholas C.Zakes","Hely"],
+		edition:3,
+		year:2009,
+		toJSON:function(){
+			return this.title;
+		}
+};
+var jsonText7 = JSON.stringify(book);
+alert("采用toJSON()方法后："+jsonText7);//采用toJSON()方法后："Professional javascript"
+
+
+//toJSON()可以作为函数过滤器的补充，因此理解序列化的内部顺序很重要
+//（1）若存在toJSON对象方法，能通过它取得有效的值，则调用该方法。否则，返回对象本身。
+//（2）如果提供了第二个参数，应用这个函数过滤器。传入函数过滤器的值是第（1）步返回到值。
+//（3）对第（2）步返回的值进行相应的序列化。
+//（4）如果提供了第三个参数，执行相应的格式化。
+
+
+
+
+
+//解析选项
+//与序列化的过滤函数相似，不过这个函数成为“还原函数”
+//若还原函数返回到额undefined，则表示要从结果中删除相应的键
+//将字符串转化为Date对象时，经常要用到还原函数
+book = {
+		"title":"Professional javascript",
+		"authors":["Nocholas C.Zakes","Hely"],
+		edition:3,
+		year:2009,
+		releaseDate:new Date(2011,11,1)};
+	var jsonText8 = JSON.stringify(book);
+	var bookcopy = JSON.parse(jsonText8,function(key,value){
+		if(key=="releaseDate"){return new Date(value);}
+		else{return value;}
+	});
+	alert(bookcopy.releaseDate.getFullYear());//2011
+
+
+
+
+</script>
+</body>
+</html>

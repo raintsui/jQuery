@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>给p元素click添加事件</title>
+</head>
+<body>
+	<p>点击我</p>
+	<p>点击我</p>
+	<p>点击我</p>
+	<p>点击我</p>
+	<p>点击我</p>
+	<p>点击我</p>
+<table border="solid 1px #ccc">
+	<thead>thead</thead>
+	<tbody>
+		<tr><td>22</td><td>22</td></tr>
+		<tr><td>22</td><td>22</td></tr>
+		<tr><td>22</td><td>22</td></tr>
+		<tr><td>22</td><td>22</td></tr>
+		<tr><td>22</td><td>22</td></tr>
+		<tr><td>22</td><td>22</td></tr>
+		<tr><td>22</td><td>22</td></tr>
+	</tbody>
+	<tfoot>tfoot</tfoot>
+	</table>
+	<form>
+		<input type="checkbox" value='1' checked="checked" />1号
+		<input type="checkbox" value='2' checked="checked" />2号
+		<input type="checkbox" value='3' />3号
+		<input type="checkbox" value='4' />4号
+		<input type="checkbox" value='5' checked="checked" />5号
+		<input type="checkbox" value='6'/>6号
+	</form>
+
+
+
+	<script type="text/javascript" src='http://code.jquery.com/jquery-latest.js'></script>
+	<script type="text/javascript">
+		$(function(){
+			$("p").click(function(){
+				$(this).css("background","red");
+			})
+
+			$("table tbody tr:even").css("background-color","grey");
+			alert("多选框中被选中的个数为："+$("input:checked").length);
+		})
+	</script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>trigger()执行会出触发默认事件</title>
+	<style type="text/css">
+		input.focus{background-color: #898989;}
+	</style>
+</head>
+<body>
+	用户名：<input type="text" />
+
+
+
+<script type="text/javascript" src="../js/jquery-3.3.1.js"></script>
+<script type="text/javascript">
+	
+	$(function(){
+		$("input").bind("focus",function(){
+			$(this).addClass("focus");
+		});
+		$("input").triggerHandler("focus");
+	});
+</script>
+</body>
+</html>

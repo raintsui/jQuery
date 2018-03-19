@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>trigger模拟操作之常用模拟</title>
+</head>
+<body>
+	<button id="btn">点击我</button>
+	<div id="txt"></div>
+	
+	<script type="text/javascript" src="../js/jquery-3.3.1.js"></script>
+	<script type="text/javascript">
+	$(function(){
+			$("#btn").bind("click",myFun1=function(){
+				$("#txt").append("<p>第一个函数</p>");
+		}).bind("click",myFun2=function(){
+				$("#txt").append("<p>第二个函数</p>");
+		}).bind("click",myFun3=function(){
+				$("#txt").append("<p>第三个函数</p>");
+		}).bind("click",myFun4=function(){
+				$("#txt").append("<p>第四个函数</p>");
+		}).bind("click",myFun5=function(){
+				$("#txt").append("<p>第五个函数</p>");
+		});
+//在永不不惦记触发click事件时，有时需要模拟用户操作，来达到单击效果
+$("#btn").trigger("click");//也可以简写，$("#btn").click();
+
+		});	
+	</script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>移除事件</title>
+</head>
+<body>
+	<button id="btn">点击我</button>
+	<div id="txt"></div>
+	<button id="remove">删除事件2</button>
+	<script type="text/javascript" src="../js/jquery-3.3.1.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			$("#btn").bind("click",myFun1=function(){
+				$("#txt").append("<p>第一个函数</p>");
+		}).bind("click",myFun2=function(){
+				$("#txt").append("<p>第二个函数</p>");
+		}).bind("click",myFun3=function(){
+				$("#txt").append("<p>第三个函数</p>");
+		}).bind("click",myFun4=function(){
+				$("#txt").append("<p>第四个函数</p>");
+		}).bind("click",myFun5=function(){
+				$("#txt").append("<p>第五个函数</p>");
+		});
+
+
+		$("#remove").click(function(){
+			$("#btn").unbind("click",myFun2);
+		});
+		});
+	</script>
+</body>
+</html>
